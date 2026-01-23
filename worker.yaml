@@ -10,16 +10,6 @@ users:
           Опыт разработки высоконагруженных микросервисов на Go.
           Знание goroutines, channels, контекстов, gRPC, Gin.
           Оптимизация производительности и профилирование.
-        level: 4
-        description: |
-          Разработка реактивных систем на Java с использованием 
-          Vert.x, Quarkus, Project Reactor. Знание виртуальных 
-          потоков и structured concurrency.
-      - name: "Kubernetes"
-        level: 4
-        description: |
-          Деплой и управление кластерами K8s. Helm charts, 
-          Operators, Horizontal Pod Autoscaler, Service Mesh.
     address:
       country: "Россия"
       city: "Тюмень"
