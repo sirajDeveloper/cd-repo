@@ -7,6 +7,6 @@ spec:
   selector:
     app: rabbitmq
   ports:
-  - port: 15672
-    targetPort: 80
+  - port: 80
+    targetPort: 15672
     protocol: TCP
