@@ -20,22 +20,22 @@ spec:
         - name: AMQP_EXCHANGE
           valueFrom:
             secretKeyRef:
-              name: rabbitmq-secret
+              name: conv-api-secret
               key: AMQP_EXCHANGE
         - name: SEED_USER_PASSWORD
           valueFrom:
             secretKeyRef:
-              name: rabbitmq-secret
+              name: conv-api-secret
               key: SEED_USER_PASSWORD
         - name: SEED_USERNAME
           valueFrom:
             secretKeyRef:
-              name: rabbitmq-secret
+              name: conv-api-secret
               key: SEED_USERNAME
         - name: AMQP_HOSTNAME
           valueFrom:
             secretKeyRef:
-              name: rabbitmq-secret
+              name: conv-api-secret
               key: AMQP_HOSTNAME
         resources:
           limits:
@@ -43,3 +43,11 @@ spec:
             cpu: "200m"
         ports:
         - containerPort: 80
+        volumeMounts:
+          - name: conv-api-image-pvc
+            mountPath: /opt/app/uploads
+            subPath: env
+      volumes:
+        - name: conv-api-image-pvc
+          persistentVolumeClaim:
+            claimName: conv-api-image-pvc
