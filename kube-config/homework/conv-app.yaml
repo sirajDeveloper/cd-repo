@@ -14,7 +14,7 @@ spec:
     spec:
       containers:
       - name: conv-app
-        image: antonlarichev/short-app:latest
+        image: antonlarichev/short-app:v1.4
         imagePullPolicy: Always
         resources:
           limits:

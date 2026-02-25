@@ -13,8 +13,8 @@ spec:
         app: frontend
     spec:
       containers:
-      - name: conv-app
-        image: antonlarichev/short-app:latest
+      - name: short-app
+        image: antonlarichev/short-app:v1.4
         imagePullPolicy: Always
         resources:
           limits:

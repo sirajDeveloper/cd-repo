@@ -18,9 +18,15 @@ spec:
         imagePullPolicy: Always
         env:
         - name: SEED_USER_PASSWORD
-          value: "pass"
+          valueFrom:
+            secretKeyRef:
+              name: rabbitmq-secret
+              key: SEED_USER_PASSWORD
         - name: SEED_USERNAME
-          value: "user"
+          valueFrom:
+            secretKeyRef:
+              name: rabbitmq-secret
+              key: SEED_USERNAME
         resources:
           limits:
             memory: "300Mi"
