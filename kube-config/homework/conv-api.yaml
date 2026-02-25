@@ -1,22 +1,27 @@
 apiVersion: apps/v1
 kind: Deployment
 metadata:
-  name: rabbitmq-deployment
+  name: conv-api
 spec:
-  replicas: 1
+  replicas: 2
   selector:
     matchLabels:
-      app: rabbitmq
+      app: conv-api
   template:
     metadata:
       labels:
-        app: rabbitmq
+        app: conv-api
     spec:
       containers:
-      - name: rabbitmq
-        image: rabbitmq:4.0-management
+      - name: conv-api
+        image: antonlarichev/short-api:v.0
         imagePullPolicy: Always
         env:
+        - name: AMQP_EXCHANGE
+          valueFrom:
+            secretKeyRef:
+              name: rabbitmq-secret
+              key: AMQP_EXCHANGE
         - name: SEED_USER_PASSWORD
           valueFrom:
             secretKeyRef:
@@ -27,17 +32,14 @@ spec:
             secretKeyRef:
               name: rabbitmq-secret
               key: SEED_USERNAME
+        - name: AMQP_HOSTNAME
+          valueFrom:
+            secretKeyRef:
+              name: rabbitmq-secret
+              key: AMQP_HOSTNAME
         resources:
           limits:
-            memory: "300Mi"
-            cpu: "300m"
-        volumeMounts:
-          - name: rabbitmq-data
-            mountPath: /var/lib/rabbitmq
-            subPath: rabbitmq
+            memory: "500i"
+            cpu: "200m"
         ports:
-        - containerPort: 5672
-      volumes:
-        - name: rabbitmq-data
-          persistentVolumeClaim:
-            claimName: rabbitmq-pvc
+        - containerPort: 80

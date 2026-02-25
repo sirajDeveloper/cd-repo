@@ -19,3 +19,10 @@ spec:
             name: short-app-clasterip
             port: 
               number: 80
+      - pathType: Prefix
+        path: "/api"
+        backend:
+          service:
+            name: short-api-clasterip
+            port: 
+              number: 3000

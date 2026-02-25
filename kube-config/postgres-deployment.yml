@@ -16,6 +16,22 @@ spec:
       - name: postgres
         image: postgres:16.0
         imagePullPolicy: Always
+        env:
+         - name: POSTGRES_DB
+           valueFrom:
+            secretKeyRef:
+              name: postgres-secret
+              key: POSTGRES_DB
+         - name: POSTGRES_USER
+           valueFrom:
+            secretKeyRef:
+              name: postgres-secret
+              key: POSTGRES_USER
+         - name: POSTGRES_PASSWORD
+           valueFrom: 
+            secretKeyRef:
+              name: postgres-secret
+              key: POSTGRES_PASSWORD
         resources:
           limits:
             memory: "300Mi"
