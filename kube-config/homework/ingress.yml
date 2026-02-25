@@ -16,7 +16,7 @@ spec:
         path: "/"
         backend:
           service:
-            name: conv-app-clasterip
+            name: conv-app-clusterip
             port: 
               number: 80
-              
+

@@ -1,12 +1,12 @@
 apiVersion: v1
 kind: Service
 metadata:
-  name: conv-app-clusterip
+  name: rabbitmq-clasterip
 spec:
   type: ClusterIP
   selector:
-    app: conv-app
+    app: rabbitmq
   ports:
   - port: 80
-    targetPort: 80
+    targetPort: 15672
     protocol: TCP
