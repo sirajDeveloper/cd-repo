@@ -3,7 +3,7 @@ kind: Deployment
 metadata:
   name: conv-app
 spec:
-  replicas: 2
+  replicas: 1
   selector:
     matchLabels:
       app: conv-app
@@ -16,9 +16,23 @@ spec:
       - name: conv-app
         image: antonlarichev/short-app:v1.4
         imagePullPolicy: Always
+        env:
+        - name: AMQP_QUEUE
+          valueFrom:
+            secretKeyRef:
+              name: conv-api-secret
+              key: AMQP_QUEUE
         resources:
           limits:
             memory: "128Mi"
             cpu: "150m"
         ports:
         - containerPort: 80
+        volumeMounts:
+          - name: test
+            mountPath: /etc/test
+            readOnly: true
+      volumes:
+        - name: test
+          configMap:
+            name: conv-app-configmap
