@@ -22,17 +22,14 @@ spec:
             secretKeyRef:
               name: conv-api-secret
               key: AMQP_QUEUE
+        - name: VITE_DOMAIN
+          valueFrom:
+            configMapKeyRef:
+              name: conv-app-configmap
+              key: VITE_DOMAIN
         resources:
           limits:
             memory: "128Mi"
             cpu: "150m"
         ports:
         - containerPort: 80
-        volumeMounts:
-          - name: test
-            mountPath: /etc/test
-            readOnly: true
-      volumes:
-        - name: test
-          configMap:
-            name: conv-app-configmap
