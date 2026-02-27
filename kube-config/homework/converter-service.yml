@@ -1,12 +1,12 @@
 apiVersion: v1
 kind: Service
 metadata:
-  name: postgres-clasterip
+  name: converter-clusterip
 spec:
   type: ClusterIP
   selector:
-    app: postgres
+    app: converter
   ports:
   - port: 80
-    targetPort: 5432
+    targetPort: 80
     protocol: TCP

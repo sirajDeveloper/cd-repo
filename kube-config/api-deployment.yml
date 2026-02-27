@@ -28,3 +28,29 @@ spec:
           limits:
             memory: "500Mi"
             cpu: "200m"
+        volumeMounts:
+          - name: test
+            mountPath: /etc/test
+            readOnly: true
+        livenessProbe:
+          exec:
+            command:
+              - curl
+              - --fail
+              - http://localhost:3000/api
+          initialDelaySeconds: 30
+          periodSeconds: 5
+          failureThreshold: 1
+        readinessProbe:
+          exec:
+            command:
+              - curl
+              - --fail
+              - http://localhost:3000/api
+          initialDelaySeconds: 30
+          periodSeconds: 10
+          failureThreshold: 5
+      volumes:
+        - name: test
+          configMap:
+            name: demo-config

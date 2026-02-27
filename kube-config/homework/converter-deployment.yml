@@ -1,37 +1,32 @@
 apiVersion: apps/v1
 kind: Deployment
 metadata:
-  name: conv-api
+  name: converter
 spec:
   replicas: 2
   selector:
     matchLabels:
-      app: conv-api
+      app: converter
   template:
     metadata:
       labels:
-        app: conv-api
+        app: converter
     spec:
       containers:
-      - name: conv-api
-        image: antonlarichev/short-api:v1.0
+      - name: converter
+        image: antonlarichev/converter:v1.0
         imagePullPolicy: Always
         env:
+        - name: AMQP_QUEUE
+          valueFrom:
+            secretKeyRef:
+              name: conv-api-secret
+              key: AMQP_QUEUE
         - name: AMQP_EXCHANGE
           valueFrom:
             secretKeyRef:
               name: conv-api-secret
               key: AMQP_EXCHANGE
-        - name: SEED_USER_PASSWORD
-          valueFrom:
-            secretKeyRef:
-              name: conv-api-secret
-              key: SEED_USER_PASSWORD
-        - name: SEED_USERNAME
-          valueFrom:
-            secretKeyRef:
-              name: conv-api-secret
-              key: SEED_USERNAME
         - name: AMQP_USER
           valueFrom:
             secretKeyRef:
@@ -53,11 +48,3 @@ spec:
             cpu: "200m"
         ports:
         - containerPort: 80
-        volumeMounts:
-          - name: conv-api-image-pvc
-            mountPath: /opt/app/uploads
-            subPath: env
-      volumes:
-        - name: conv-api-image-pvc
-          persistentVolumeClaim:
-            claimName: conv-api-image-pvc

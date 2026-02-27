@@ -3,7 +3,7 @@ kind: Deployment
 metadata:
   name: conv-app
 spec:
-  replicas: 2
+  replicas: 1
   selector:
     matchLabels:
       app: conv-app
@@ -16,6 +16,17 @@ spec:
       - name: conv-app
         image: antonlarichev/short-app:v1.4
         imagePullPolicy: Always
+        env:
+        - name: AMQP_QUEUE
+          valueFrom:
+            secretKeyRef:
+              name: conv-api-secret
+              key: AMQP_QUEUE
+        - name: VITE_DOMAIN
+          valueFrom:
+            configMapKeyRef:
+              name: conv-app-configmap
+              key: VITE_DOMAIN
         resources:
           limits:
             memory: "128Mi"
