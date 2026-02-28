@@ -1,19 +1,19 @@
 apiVersion: apps/v1
 kind: Deployment
 metadata:
-  name: conv-app
+  name: {{ .Values.app.name }}
 spec:
-  replicas: 1
+  replicas: { .Values.app.replicas }
   selector:
     matchLabels:
-      app: conv-app
+      app: {{ .Values.app.name }}
   template:
     metadata:
       labels:
-        app: conv-app
+        app: {{ .Values.app.name }}
     spec:
       containers:
-      - name: conv-app
+      - name: {{ .Values.app.name }}
         image: antonlarichev/short-app:v1.4
         imagePullPolicy: Always
         env:
@@ -28,8 +28,6 @@ spec:
               name: conv-app-configmap
               key: VITE_DOMAIN
         resources:
-          limits:
-            memory: "128Mi"
-            cpu: "150m"
+          limits: {{ .Values.limits | toYaml | nindent 14 }}
         ports:
         - containerPort: 80
