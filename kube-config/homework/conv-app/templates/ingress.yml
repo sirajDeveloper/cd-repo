@@ -18,7 +18,7 @@ spec:
           service:
             name: conv-app-clusterip
             port: 
-              number: 80
+              number: {{ .Values.app.port }}
       - pathType: Prefix
         path: "/api"
         backend:
